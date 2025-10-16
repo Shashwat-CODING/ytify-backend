@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JSON Structure Viewer</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #f7f9fb;
+      padding: 20px;
+      color: #222;
+    }
+    h2 {
+      text-align: center;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
+      font-family: monospace;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      background: #fff;
+      resize: vertical;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      border: none;
+      background: #007bff;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    pre {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 20px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .key { color: #1f6feb; }
+    .type { color: #9a6700; }
+    .indent { margin-left: 20px; }
+  </style>
+</head>
+<body>
+  <h2>JSON Structure Viewer</h2>
+  <textarea id="jsonInput" placeholder="Paste your JSON response here..."></textarea>
+  <br>
+  <button onclick="showStructure()">Show Structure</button>
+  <pre id="output"></pre>
+
+  <script>
+    function getStructure(obj, indent = 0) {
+      const spaces = ' '.repeat(indent * 2);
+      let structure = '';
+
+      if (Array.isArray(obj)) {
+        structure += `${spaces}Array [\n`;
+        if (obj.length > 0) structure += getStructure(obj[0], indent + 1);
+        structure += `${spaces}]\n`;
+      } else if (typeof obj === 'object' && obj !== null) {
+        structure += `${spaces}{\n`;
+        for (const key in obj) {
+          const value = obj[key];
+          const type = Array.isArray(value) ? 'Array' : typeof value;
+          structure += `${spaces}  <span class="key">"${key}"</span>: <span class="type">${type}</span>\n`;
+          if (type === 'object' || type === 'Array') {
+            structure += getStructure(value, indent + 1);
+          }
+        }
+        structure += `${spaces}}\n`;
+      } else {
+        structure += `${spaces}${typeof obj}\n`;
+      }
+
+      return structure;
+    }
+
+    function showStructure() {
+      const input = document.getElementById('jsonInput').value.trim();
+      const output = document.getElementById('output');
+
+      try {
+        const json = JSON.parse(input);
+        output.innerHTML = getStructure(json);
+      } catch (e) {
+        output.textContent = '❌ Invalid JSON: ' + e.message;
+      }
+    }
+  </script>
+</body>
+</html>

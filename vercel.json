@@ -1,0 +1,26 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "version": 2,
+
+  "functions": {
+    "api/**/*.js": {
+      "memory": 1024,
+      "maxDuration": 10,
+      "includeFiles": "{routes/**,lib/**,package.json,package-lock.json}"
+    }
+  },
+
+  "routes": [
+    { "src": "^/api(?:/.*)?$", "dest": "/api/app" },
+    { "src": "^/entities(?:/.*)?$", "dest": "/api/app" },
+    { "src": "^/explore(?:/.*)?$", "dest": "/api/app" },
+    { "src": "^/youtube(?:/.*)?$", "dest": "/api/app" },
+    { "src": "^/jiosaavn(?:/.*)?$", "dest": "/api/app" },
+    { "src": "^/api-docs(?:/.*)?$", "dest": "/api/app" },
+    { "src": "^/health$", "dest": "/api/app" }
+  ],
+
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
