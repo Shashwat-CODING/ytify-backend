@@ -1534,11 +1534,7 @@ router.get('/album/:id', async (req, res) => {
 
     console.log(`[ALBUM] Extracted ${albumInfo.tracks.length} tracks for album ${albumId}`);
 
-    return res.json({
-      success: true,
-      album: albumInfo,
-      timestamp: new Date().toISOString()
-    });
+    return res.json(albumInfo);
 
   } catch (error) {
     console.error(`[ALBUM] Error fetching album ${albumId}:`, error.message);
