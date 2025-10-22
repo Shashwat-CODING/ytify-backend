@@ -25,8 +25,8 @@ A powerful Node.js/Express.js API that provides access to multiple music streami
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd Music/js
+git clone https://github.com/Shashwat-CODING/ytify-backend.git
+cd ytify-backend
 
 # Install dependencies
 npm install
