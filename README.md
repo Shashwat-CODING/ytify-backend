@@ -1,6 +1,6 @@
 # 🎵 ytify-backend
 
-<img src="icon.png" alt="ytify-backend" width="64" height="64">
+<img src="icon.png" alt="ytify-backend" width="320" height="320">
 
 A powerful Node.js/Express.js API that provides access to multiple music streaming services including YouTube Music, YouTube Search, Last.fm, Saavn, Piped, and Invidious. Perfect for building music applications, playlists, and discovery features.
 
