@@ -441,4 +441,4 @@ For issues and questions:
 
 ---
 
-**Made with ❤️ for the music community**
+**Made with ❤️ by Shashwat for the ytify community**
