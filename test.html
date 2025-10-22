@@ -1,100 +1,906 @@
 <!DOCTYPE html>
 <html lang="en">
+
+
 <head>
-  <meta charset="UTF-8">
-  <title>JSON Structure Viewer</title>
-  <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: #f7f9fb;
-      padding: 20px;
-      color: #222;
-    }
-    h2 {
-      text-align: center;
-    }
-    textarea {
-      width: 100%;
-      height: 200px;
-      font-family: monospace;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background: #fff;
-      resize: vertical;
-    }
-    button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      border: none;
-      background: #007bff;
-      color: #fff;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0056b3;
-    }
-    pre {
-      background: #fff;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 15px;
-      margin-top: 20px;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    .key { color: #1f6feb; }
-    .type { color: #9a6700; }
-    .indent { margin-left: 20px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="wHR4X3tF8OCZAVtxVdNeIGoRDSUlflXt9ThJwplq">
+    <title>Best EDU Email Generator | Create Free Temp Emails | Nullsto</title><meta name="description" content="Generate the Best EDU Email for free, and you can also use it for all your temporary email addresses.  Everything is in place."><meta name="keywords" content="Best EDU Email,temporary email addresses,Temp email"><link rel="canonical" href="https://nullsto.edu.pl">
+    <meta property="og:title" content="Best EDU Email Generator | Create Free Temp Emails | Nullsto"><meta property="og:description" content="Generate the Best EDU Email for free, and you can also use it for all your temporary email addresses.  Everything is in place."><meta property="og:site_name" content="Nullsto"><meta property="og:type" content="article"><meta property="og:url" content="https://nullsto.edu.pl">
+    
+    <link rel="icon" type="image/png" href="https://nullsto.edu.pl/assets/themes/basic/img/favicon.png?t=1760558058" />
+    <link rel="apple-touch-icon" href="https://nullsto.edu.pl/assets/themes/basic/img/favicon.png?t=1760558058" />
+    <!-- Main Stylesheet (Critical for Layout) - Always Load -->
+    <link rel="stylesheet" href="https://nullsto.edu.pl/assets/css/vendor/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://nullsto.edu.pl/assets/themes/basic/css/style.css?v=2.2" />
+    <!-- Preload Critical CSS Files -->
+    <link rel="preload" href="https://nullsto.edu.pl/assets/css/vendor/bootstrap.min.css" as="style">
+    <!-- Asynchronously Load Non-Critical CSS Files -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800;900&display=swap"
+        media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://nullsto.edu.pl/assets/css/vendor/fontawesome.min.css" media="print"
+        onload="this.media='all'">
+    <link rel="stylesheet" href="https://nullsto.edu.pl/assets/css/vendor/select2.min.css" media="print"
+        onload="this.media='all'">
+    <link rel="stylesheet" href="https://nullsto.edu.pl/assets/css/vendor/aos.min.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://nullsto.edu.pl/assets/css/vendor/flasher.min.css" media="print"
+        onload="this.media='all'">
+
+    <!-- Additional Styles -->
+    <link rel="preload" href="https://nullsto.edu.pl/assets/themes/basic/css/style.css?v=2.2"
+        as="style">
+
+    <style>
+    </style>
+
+    
+        <link rel="alternate" hreflang="x-default" href="https://nullsto.edu.pl/" />
+    <link rel="alternate" hreflang="en" href="https://nullsto.edu.pl/" />
+
+
+    
+    
+
+<script type="text/javascript" class="flasher-js">(function() {    var rootScript = 'https://cdn.jsdelivr.net/npm/@flasher/flasher@1.3.2/dist/flasher.min.js';    var FLASHER_FLASH_BAG_PLACE_HOLDER = {};    var options = mergeOptions([], FLASHER_FLASH_BAG_PLACE_HOLDER);    function mergeOptions(first, second) {        return {            context: merge(first.context || {}, second.context || {}),            envelopes: merge(first.envelopes || [], second.envelopes || []),            options: merge(first.options || {}, second.options || {}),            scripts: merge(first.scripts || [], second.scripts || []),            styles: merge(first.styles || [], second.styles || []),        };    }    function merge(first, second) {        if (Array.isArray(first) && Array.isArray(second)) {            return first.concat(second).filter(function(item, index, array) {                return array.indexOf(item) === index;            });        }        return Object.assign({}, first, second);    }    function renderOptions(options) {        if(!window.hasOwnProperty('flasher')) {            console.error('Flasher is not loaded');            return;        }        requestAnimationFrame(function () {            window.flasher.render(options);        });    }    function render(options) {        if ('loading' !== document.readyState) {            renderOptions(options);            return;        }        document.addEventListener('DOMContentLoaded', function() {            renderOptions(options);        });    }    if (1 === document.querySelectorAll('script.flasher-js').length) {        document.addEventListener('flasher:render', function (event) {            render(event.detail);        });            }    if (window.hasOwnProperty('flasher') || !rootScript || document.querySelector('script[src="' + rootScript + '"]')) {        render(options);    } else {        var tag = document.createElement('script');        tag.setAttribute('src', rootScript);        tag.setAttribute('type', 'text/javascript');        tag.onload = function () {            render(options);        };        document.head.appendChild(tag);    }})();</script>
 </head>
+
 <body>
-  <h2>JSON Structure Viewer</h2>
-  <textarea id="jsonInput" placeholder="Paste your JSON response here..."></textarea>
-  <br>
-  <button onclick="showStructure()">Show Structure</button>
-  <pre id="output"></pre>
 
-  <script>
-    function getStructure(obj, indent = 0) {
-      const spaces = ' '.repeat(indent * 2);
-      let structure = '';
+    
+                <!-- Start Header -->
+    <header class="header">
+        <div class="star-bg">
+            <div id="stars"></div>
+            <div id="stars2"></div>
+            <div id="stars3"></div>
+        </div>
 
-      if (Array.isArray(obj)) {
-        structure += `${spaces}Array [\n`;
-        if (obj.length > 0) structure += getStructure(obj[0], indent + 1);
-        structure += `${spaces}]\n`;
-      } else if (typeof obj === 'object' && obj !== null) {
-        structure += `${spaces}{\n`;
-        for (const key in obj) {
-          const value = obj[key];
-          const type = Array.isArray(value) ? 'Array' : typeof value;
-          structure += `${spaces}  <span class="key">"${key}"</span>: <span class="type">${type}</span>\n`;
-          if (type === 'object' || type === 'Array') {
-            structure += getStructure(value, indent + 1);
-          }
-        }
-        structure += `${spaces}}\n`;
-      } else {
-        structure += `${spaces}${typeof obj}\n`;
-      }
+        <div class="particle1"></div>
 
-      return structure;
-    }
+        <div class="custom-shape-divider-bottom-1696181426">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path
+                    d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"
+                    class="shape-fill"></path>
+            </svg>
+        </div>
 
-    function showStructure() {
-      const input = document.getElementById('jsonInput').value.trim();
-      const output = document.getElementById('output');
+        <!-- Start Nav -->
+<nav class="nav">
+    <div class="container">
+        <!-- Start Nav Inner -->
+        <div class="nav-inner">
+            <!-- Start Logo -->
+            <a href="https://nullsto.edu.pl" class="logo ">
+                <img class="white-logo" src="https://nullsto.edu.pl/assets/themes/basic/img/dark_logo.png?t=1760558058" alt="Nullsto" />
+                <img class="dark-logo" src="https://nullsto.edu.pl/assets/themes/basic/img/logo.png?t=1760558058" alt="Nullsto" />
+            </a>
+            <!-- End Logo -->
+            <!-- Start Nav Actions SM -->
+            <div class="nav-actions-sm">
+                                <!-- Start Nav Menu Button -->
+                <div class="nav-menu-button">
+                    <i class="fa fa-bars fa-lg"></i>
+                </div>
+                <!-- End Nav Menu Button -->
+            </div>
+            <!-- End Nav Actions SM -->
+            <!-- Start Nav Menu -->
+            <div class="nav-menu">
+                <div class="overlay"></div>
+                <div class="nav-menu-scroller">
+                    <div class="nav-menu-body">
+                        <div class="row row-cols-auto justify-content-between flex-nowrap mb-5 d-xl-none">
 
-      try {
-        const json = JSON.parse(input);
-        output.innerHTML = getStructure(json);
-      } catch (e) {
-        output.textContent = '❌ Invalid JSON: ' + e.message;
-      }
-    }
-  </script>
-</body>
+                            <div class="col col ms-auto">
+                                <div class="nav-menu-close">
+                                    <i class="fa fa-times"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="nav-actions">
+                            
+                            <div class="nav-links">
+                                                                                                            <a  target="_blank"                                             href="https://t.me/digitalselling023" class="nav-link"><i class="fa-brands fa-telegram"></i>
+                                            For Paid Promotion</a>
+                                                                    
+                            </div>
+
+                                                                                                                            <a class="btn btn-secondary btn-md" href="https://nullsto.edu.pl/register">
+                                        Sign up
+                                    </a>
+                                    <a class="btn btn-outline-light btn-md" href="https://nullsto.edu.pl/login">
+                                        Login
+                                    </a>
+                                                                                    </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Nav Menu -->
+        </div>
+        <!-- End Nav Inner -->
+    </div>
+</nav>
+<!-- End Nav -->
+        <!-- Start Header Wrapper -->
+        <div class="header-wrapper">
+    <div class="container-fluid">
+        <!-- Start Header Title -->
+        <h1 class="header-title">
+            Get Your Free Temporary Email Address at Nullsto
+        </h1>
+        <!-- End Header Title -->
+        <!-- Start Header Text -->
+        <p class="header-text lead">
+            Nullsto provides free temporary email addresses to protect your privacy online.
+
+        </p>
+        <!-- End Header Text -->
+        <!-- Start Mail Wrapper -->
+        <div class="mail-wrapper">
+            
+            <!-- Start Mail Selection -->
+            <div class="mail-selection mb-3">
+                <!-- Start Mail Select -->
+                <div class="mail-select" data-clipboard-target="#mainEmail">
+                    <!-- Start Mail Input -->
+                    <div class="mail-input">
+                        <input id="mainEmail" type="text" value="Landing" readonly
+                            aria-label="Landing" />
+                        <input id="email_token" hidden value="" />
+                        <!-- Start Mail Input Copy -->
+                        <button class="mail-input-copy btn btn-secondary disable-button btn-copy" disabled
+                            data-clipboard-target="#mainEmail" aria-label="Copy email address">
+                            <i class="far fa-clone" id="copyIcon"></i>
+                        </button>
+                        <!-- End Mail Input Copy -->
+                    </div>
+                    <!-- End Mail Input -->
+                </div>
+                <!-- End Mail Select -->
+                <!-- Start Mail Actions -->
+                <div class="mail-actions">
+                    <!-- Start Mail Action -->
+                    <button id="refresh" class="mail-action btn btn-light btn-md"
+                        aria-label="Refresh">
+                        <i class="fas fa-redo-alt"></i> <span class="mail-action-text">Refresh</span>
+                    </button>
+                    <button disabled class="mail-action btn btn-light btn-md kill request-button disable-button"
+                        id='delete' aria-label="Delete">
+                        <i class="fa fa-trash"></i> <span class="mail-action-text">Delete</span>
+                    </button>
+                    <!-- End Mail Action -->
+                    <!-- Start Mail Action -->
+                    <button disabled class="mail-action btn btn-light btn-md disable-button" id="show_qr_code"
+                        aria-label="QR Code">
+                        <i class="fa-solid fa-qrcode"></i> <span
+                            class="mail-action-text">QR Code</span>
+                    </button>
+                    <!-- End Mail Action -->
+                    <!-- Start Mail Action -->
+                    <button disabled class="mail-action btn btn-light btn-md disable-button" id="show_history"
+                        aria-label="History">
+                        <i class="fa-solid fa-clock-rotate-left"></i> <span
+                            class="mail-action-text">History</span>
+                    </button>
+                    <!-- End Mail Action -->
+                    <!-- Start Mail Action -->
+                    <button disabled class="mail-action btn btn-light btn-md disable-button" data-bs-toggle="modal"
+                        data-bs-target="#changeEmail" id="change_email_btn" aria-label="Change">
+                        <i class="fa-solid fa-pen-to-square"></i> <span
+                            class="mail-action-text">Change</span>
+                    </button>
+                    <!-- End Mail Action -->
+                </div>
+                <!-- End Mail Actions -->
+            </div>
+            <!-- End Mail Selection -->
+            
+        </div>
+        <!--  ads('header_bottom', 'ad-h mx-auto my-4') -->
+        
+        <p class="header-text lead">
+            100% Free - No Subscription Needed
+        </p>
+        <!-- Start Header Counters -->
+        <div class="header-counters mt-4">
+            <div class="row row-cols-1 row-cols-md-2 g-3">
+                <div class="col">
+                    <!-- Start Header Counter -->
+                    <div class="header-counter">
+                        <!-- Start Header Counter Info -->
+                        <div class="header-counter-info">
+                            <!-- Start Header Counter Number -->
+                            <p class="header-counter-number">21,123</p>
+                            <!-- End Header Counter Number -->
+                            <!-- Start Header Counter Title -->
+                            <p class="header-counter-title">Emails Created</p>
+                            <!-- End Header Counter Title -->
+                        </div>
+                        <!-- End Header Counter Info -->
+                        <!-- Start Header Counter Icon -->
+                        <div class="header-counter-icon">
+                            <i class="fa-solid fa-at"></i>
+                        </div>
+                        <!-- End Header Counter Icon -->
+                    </div>
+                    <!-- End Header Counter -->
+                </div>
+                <div class="col">
+                    <!-- Start Header Counter -->
+                    <div class="header-counter">
+                        <!-- Start Header Counter Info -->
+                        <div class="header-counter-info">
+                            <!-- Start Header Counter Number -->
+                            <p class="header-counter-number">32,756</p>
+                            <!-- End Header Counter Number -->
+                            <!-- Start Header Counter Title -->
+                            <p class="header-counter-title">Messages Received</p>
+                            <!-- End Header Counter Title -->
+                        </div>
+                        <!-- End Header Counter Info -->
+                        <!-- Start Header Counter Icon -->
+                        <div class="header-counter-icon">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <!-- End Header Counter Icon -->
+                    </div>
+                    <!-- End Header Counter -->
+                </div>
+            </div>
+            <!-- End Header Counters -->
+        </div>
+    </div>
+</div>
+
+<!-- ShareThis BEGIN -->
+
+<div class="modal fade" id="qrCode" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center px-4 py-3">
+                <h5>Scan the QR Code</h5>
+                <p class="text-muted mb-3">
+                    Use this QR code to quickly open your inbox on any compatible device
+                </p>
+                <div class="mb-5">
+                    <div id="qrcode"></div>
+                </div>
+                <button class="btn btn-primary btn-md w-100"
+                    data-bs-dismiss="modal">Back to Inbox</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="changeEmail">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title">Change Email</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label class="form-label">Email Alias</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control form-control-md" id="random_code_input">
+                        <button type="button" id="random_code"
+                            class="btn btn-primary btn-md">Random Name</button>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Domain</label>
+                    <select class="form-select form-select-md select-input" id="name_domain">
+
+                                                                        <optgroup label="Free Domains">
+                                                            <option value="nullsto.edu.pl">
+                                    nullsto.edu.pl
+                                </option>
+                                                    </optgroup>
+                    </select>
+                </div>
+                <button id="change_email"
+                    class="btn btn-primary kill btn-md w-100">Update Email Address</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="history" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header border-0 pb-0">
+                <h5 class="modal-title">Email History</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <p class="modal-title text-muted ps-3 pe-5 mb-0 small">
+                View your email history</p>
+            <div class="modal-body text-center modal-history">
+                <div class="row row-cols-auto flex-nowrap g-3 mb-3">
+                    <div class="col-12 flex-shrink-1">
+                        <input type="text" id="search_history" class="form-control form-control-md"
+                            placeholder="Type to search ..." />
+                    </div>
+                    <div class="col">
+                        <button id="delete_history"
+                            class="btn btn-danger btn-md kill">Delete</button>
+                    </div>
+                </div>
+                <div class="mail-history" id="mail-history">
+                </div>
+                <div class="mail-results-info">
+                    <p class="mb-0 small">Emails in History: <span id="history-count">0
+                        </span> /
+                                                <span id="history-total">2</span>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+            <!-- End Header Wrapper -->
+
+    </header>
+    <!-- End Header -->
+
+    <!-- Start Section -->
+<section class="section pt-5">
+    <div class="container">
+        <div class="section-inner ">
+
+                            <div class="ad ad-h mx-auto mb-4">
+                    <a href="https://www.backlinkrepository.live">
+
+    <img src="https://www.backlinkrepository.live/wp-content/uploads/2025/10/Backlinkrepository-e1760620149841.png" alt="Backlinkrepository Banner">
+
+</a>
+                </div>
+                        <div class="mailbox-container ">
+                                <div class="mail-content" data-aos="fade-up">
+                    <div class="mailbox empty">
+                        <!-- Start Mailbox Header -->
+                        <div class="mailbox-header">
+                            <!-- Start Mailbox Header Item -->
+                            <div class="mailbox-header-item">
+                                <p>Sender</p>
+                            </div>
+                            <!-- End Mailbox Header Item -->
+                            <!-- Start Mailbox Header Item -->
+                            <div class="mailbox-header-item">
+                                <p>Subject</p>
+                            </div>
+                            <!-- End Mailbox Header Item -->
+                            <!-- Start Mailbox Header Item -->
+                            <div class="mailbox-header-item text-center">
+                                <p>Time</p>
+                            </div>
+                            <!-- End Mailbox Header Item -->
+                        </div>
+                        <!-- End Mailbox Header -->
+                        <!-- Start Mailbox Body -->
+                        <div class="mailbox-body">
+                            <div class="empty">
+                                <!-- Start Empty Icon -->
+                                <div class="empty-icon">
+                                    <svg width="92" height="94" viewBox="0 0 92 87" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M26 54.37V38.9C26.003 37.125 26.9469 35.4846 28.48 34.59L43.48 25.84C45.027 24.9468 46.933 24.9468 48.48 25.84L63.48 34.59C65.0285 35.4745 65.9887 37.1167 66 38.9V54.37C66 57.1314 63.7614 59.37 61 59.37H31C28.2386 59.37 26 57.1314 26 54.37Z"
+                                            fill="#8C92A5"></path>
+                                        <path
+                                            d="M46 47.7L26.68 36.39C26.2325 37.1579 25.9978 38.0312 26 38.92V54.37C26 57.1314 28.2386 59.37 31 59.37H61C63.7614 59.37 66 57.1314 66 54.37V38.9C66.0022 38.0112 65.7675 37.1379 65.32 36.37L46 47.7Z"
+                                            fill="#CDCDD8"></path>
+                                        <path
+                                            d="M27.8999 58.27C28.7796 58.9758 29.8721 59.3634 30.9999 59.37H60.9999C63.7613 59.37 65.9999 57.1314 65.9999 54.37V38.9C65.9992 38.0287 65.768 37.1731 65.3299 36.42L27.8999 58.27Z"
+                                            fill="#E5E5F0"></path>
+                                        <path class="emptyInboxRotation"
+                                            d="M77.8202 29.21L89.5402 25.21C89.9645 25.0678 90.4327 25.1942 90.7277 25.5307C91.0227 25.8673 91.0868 26.348 90.8902 26.75L87.0002 34.62C86.8709 34.8874 86.6407 35.0924 86.3602 35.19C86.0798 35.2806 85.7751 35.2591 85.5102 35.13L77.6502 31.26C77.2436 31.0643 76.9978 30.6401 77.0302 30.19C77.0677 29.7323 77.3808 29.3438 77.8202 29.21Z"
+                                            fill="#E5E5F0"></path>
+                                        <path class="emptyInboxRotation"
+                                            d="M5.12012 40.75C6.36707 20.9791 21.5719 4.92744 41.2463 2.61179C60.9207 0.296147 79.4368 12.3789 85.2401 31.32"
+                                            stroke="#E5E5F0" stroke-width="3" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                        <path class="emptyInboxRotation"
+                                            d="M14.18 57.79L2.46001 61.79C2.03313 61.9358 1.56046 61.8088 1.2642 61.4686C0.967927 61.1284 0.906981 60.6428 1.11001 60.24L5.00001 52.38C5.12933 52.1127 5.35954 51.9076 5.64001 51.81C5.92044 51.7194 6.22508 51.7409 6.49001 51.87L14.35 55.74C14.7224 55.9522 14.9394 56.36 14.9073 56.7874C14.8753 57.2149 14.5999 57.5857 14.2 57.74L14.18 57.79Z"
+                                            fill="#E5E5F0"></path>
+                                        <path class="emptyInboxRotation"
+                                            d="M86.9998 45.8C85.9593 65.5282 70.9982 81.709 51.4118 84.2894C31.8254 86.8697 13.1841 75.1156 7.06982 56.33"
+                                            stroke="#E5E5F0" stroke-width="3" stroke-linecap="round"
+                                            stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                                <!-- End Empty Icon -->
+                                <h2 class="mt-3 mb-2">Your inbox is empty</h2>
+                                <p class="text-muted mb-0">Waiting for incoming emails
+                                </p>
+                            </div>
+                            <div id="mailbox">
+                            </div>
+                        </div>
+                        <!-- End Mailbox Body -->
+                    </div>
+                                    </div>
+                            </div>
+        </div>
+    </div>
+</section>
+<!-- End Section -->
+
+                        <!-- Start Section -->
+    <section class="section">
+        <div class="container">
+            <!-- Start Section Inner -->
+            <div class="section-inner">
+                <!-- Start Section Header -->
+                <div class="section-header">
+                    <div class="section-title-sm">
+                        <span>Features</span>
+                    </div>
+                    <h2 class="section-title">Why Choose Our Temp Mail?</h2>
+                    <p class="section-text lead mb-0">Explore the features that make our temporary email service fast, secure, and easy to use</p>
+                </div>
+                <!-- End Section Header -->
+                <!-- Start Section Body -->
+                <div class="section-body">
+                    <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 justify-content-center g-4">
+                                                    <div class="col " data-aos="fade-up">
+                                <!-- Start Feature -->
+                                <div class="feat h-100">
+                                    <!-- Start Feature Icon -->
+                                    <div class="feat-icon">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                    <!-- End Feature Icon -->
+                                    <!-- Start Feature Title -->
+                                    <h3 class="feat-title">100% Safe</h3>
+                                    <!-- End Feature Title -->
+                                    <!-- Start Feature Text -->
+                                    <p class="feat-text lead">
+                                        Protect your privacy by keeping spam and unwanted emails out of your personal inbox
+                                    </p>
+                                    <!-- End Feature Text -->
+                                </div>
+                                <!-- End Feature -->
+                            </div>
+                                                    <div class="col " data-aos="fade-up">
+                                <!-- Start Feature -->
+                                <div class="feat h-100">
+                                    <!-- Start Feature Icon -->
+                                    <div class="feat-icon">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                    <!-- End Feature Icon -->
+                                    <!-- Start Feature Title -->
+                                    <h3 class="feat-title">Instant Access</h3>
+                                    <!-- End Feature Title -->
+                                    <!-- Start Feature Text -->
+                                    <p class="feat-text lead">
+                                        Receive emails instantly with real-time inbox updates—no delays, no refresh required.
+                                    </p>
+                                    <!-- End Feature Text -->
+                                </div>
+                                <!-- End Feature -->
+                            </div>
+                                                    <div class="col " data-aos="fade-up">
+                                <!-- Start Feature -->
+                                <div class="feat h-100">
+                                    <!-- Start Feature Icon -->
+                                    <div class="feat-icon">
+                                        <i class="fas fa-globe"></i>
+                                    </div>
+                                    <!-- End Feature Icon -->
+                                    <!-- Start Feature Title -->
+                                    <h3 class="feat-title">Custom Domains</h3>
+                                    <!-- End Feature Title -->
+                                    <!-- Start Feature Text -->
+                                    <p class="feat-text lead">
+                                        Choose from multiple email domains to create a unique and secure temporary email address.
+                                    </p>
+                                    <!-- End Feature Text -->
+                                </div>
+                                <!-- End Feature -->
+                            </div>
+                                                    <div class="col " data-aos="fade-up">
+                                <!-- Start Feature -->
+                                <div class="feat h-100">
+                                    <!-- Start Feature Icon -->
+                                    <div class="feat-icon">
+                                        <i class="fas fa-envelope"></i>
+                                    </div>
+                                    <!-- End Feature Icon -->
+                                    <!-- Start Feature Title -->
+                                    <h3 class="feat-title">Simple &amp; Free</h3>
+                                    <!-- End Feature Title -->
+                                    <!-- Start Feature Text -->
+                                    <p class="feat-text lead">
+                                        Create temporary email addresses in just a few clicks. No registration required, and it’s always free to use!
+                                    </p>
+                                    <!-- End Feature Text -->
+                                </div>
+                                <!-- End Feature -->
+                            </div>
+                                                    <div class="col " data-aos="fade-up">
+                                <!-- Start Feature -->
+                                <div class="feat h-100">
+                                    <!-- Start Feature Icon -->
+                                    <div class="feat-icon">
+                                        <i class="fa-solid fa-infinity"></i>
+                                    </div>
+                                    <!-- End Feature Icon -->
+                                    <!-- Start Feature Title -->
+                                    <h3 class="feat-title">Unlimited Usage</h3>
+                                    <!-- End Feature Title -->
+                                    <!-- Start Feature Text -->
+                                    <p class="feat-text lead">
+                                        Create as many temporary emails as you need—no limits, no hidden fees, and no restrictions on usage.
+                                    </p>
+                                    <!-- End Feature Text -->
+                                </div>
+                                <!-- End Feature -->
+                            </div>
+                                                    <div class="col " data-aos="fade-up">
+                                <!-- Start Feature -->
+                                <div class="feat h-100">
+                                    <!-- Start Feature Icon -->
+                                    <div class="feat-icon">
+                                        <i class="fa-solid fa-star"></i>
+                                    </div>
+                                    <!-- End Feature Icon -->
+                                    <!-- Start Feature Title -->
+                                    <h3 class="feat-title">Favorites Feature</h3>
+                                    <!-- End Feature Title -->
+                                    <!-- Start Feature Text -->
+                                    <p class="feat-text lead">
+                                        Save important messages to your favorites for quick and easy access whenever you need them.
+                                    </p>
+                                    <!-- End Feature Text -->
+                                </div>
+                                <!-- End Feature -->
+                            </div>
+                                            </div>
+                </div>
+                <!-- End Section Body -->
+            </div>
+            <!-- End Section Inner -->
+        </div>
+
+    </section>
+    <!-- End Section -->
+                                <!-- Start Section -->
+    <section class="section">
+        <div class="container">
+            <!-- Start Section Inner -->
+            <div class="section-inner">
+                <!-- Start Section Header -->
+                <div class="section-header">
+                    <div class="section-title-sm">
+                        <span>Faqs</span>
+                    </div>
+                    <h2 class="section-title">Frequently Asked Questions</h2>
+                    <p class="section-text lead mb-0">
+                        Find answers to common questions about our temporary email service and how to use it effectively
+                    </p>
+                </div>
+                <!-- End Section Header -->
+                <!-- Start Section Body -->
+                <div class="section-body">
+                    <div class="faqs">
+                        <div class="accordion" id="accordionExample">
+                                                            <div class="accordion-item" data-aos="fade-down">
+                                    <h2 class="accordion-header" id="heading1">
+                                        <button class="accordion-button "
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse1"
+                                            aria-expanded="true"
+                                            aria-controls="collapse1">
+                                            <span>What is a temporary email address?</span>
+                                            <div class="accordion-button-icon">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse1"
+                                        class="accordion-collapse collapse  show  "
+                                        aria-labelledby="heading1"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            A temporary email address is a disposable, short-term email that allows you to receive messages without exposing your personal email. It&#039;s perfect for signing up for websites or services without worrying about spam
+                                        </div>
+                                    </div>
+                                </div>
+                                                            <div class="accordion-item" data-aos="fade-down">
+                                    <h2 class="accordion-header" id="heading2">
+                                        <button class="accordion-button collapsed"
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse2"
+                                            aria-expanded="false"
+                                            aria-controls="collapse2">
+                                            <span>How long does a temporary email address last?</span>
+                                            <div class="accordion-button-icon">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse2"
+                                        class="accordion-collapse collapse  "
+                                        aria-labelledby="heading2"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            The lifespan of a temporary email address varies. Typically, it lasts between 10 minutes to a few hours, but some services allow you to extend its duration.
+                                        </div>
+                                    </div>
+                                </div>
+                                                            <div class="accordion-item" data-aos="fade-down">
+                                    <h2 class="accordion-header" id="heading3">
+                                        <button class="accordion-button collapsed"
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse3"
+                                            aria-expanded="false"
+                                            aria-controls="collapse3">
+                                            <span>Is it safe to use a temporary email address?</span>
+                                            <div class="accordion-button-icon">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse3"
+                                        class="accordion-collapse collapse  "
+                                        aria-labelledby="heading3"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Yes, temporary emails are designed to protect your privacy. They prevent spam and phishing attempts from reaching your personal inbox and don’t store your data.
+                                        </div>
+                                    </div>
+                                </div>
+                                                            <div class="accordion-item" data-aos="fade-down">
+                                    <h2 class="accordion-header" id="heading4">
+                                        <button class="accordion-button collapsed"
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse4"
+                                            aria-expanded="false"
+                                            aria-controls="collapse4">
+                                            <span>Can I use a temporary email address for attachments?</span>
+                                            <div class="accordion-button-icon">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse4"
+                                        class="accordion-collapse collapse  "
+                                        aria-labelledby="heading4"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Absolutely! Temporary email addresses support receiving attachments. You can securely download files sent to your temp email.
+                                        </div>
+                                    </div>
+                                </div>
+                                                            <div class="accordion-item" data-aos="fade-down">
+                                    <h2 class="accordion-header" id="heading5">
+                                        <button class="accordion-button collapsed"
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse5"
+                                            aria-expanded="false"
+                                            aria-controls="collapse5">
+                                            <span>Do I need to register to use the service?</span>
+                                            <div class="accordion-button-icon">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse5"
+                                        class="accordion-collapse collapse  "
+                                        aria-labelledby="heading5"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            No registration is required. Temporary email services are designed to be quick, anonymous, and hassle-free.
+                                        </div>
+                                    </div>
+                                </div>
+                                                            <div class="accordion-item" data-aos="fade-down">
+                                    <h2 class="accordion-header" id="heading6">
+                                        <button class="accordion-button collapsed"
+                                            type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapse6"
+                                            aria-expanded="false"
+                                            aria-controls="collapse6">
+                                            <span>Do you know Any wesbite for SEO backlinks?</span>
+                                            <div class="accordion-button-icon">
+                                                <i class="fa fa-chevron-down"></i>
+                                            </div>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse6"
+                                        class="accordion-collapse collapse  "
+                                        aria-labelledby="heading6"
+                                        data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            Certainly, you can check Backlink Repository https://backlinkrepository.live/ For your backlink needs. They have 27,500+ DIY backlinks and update regularly.
+                                        </div>
+                                    </div>
+                                </div>
+                                                    </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Section Inner -->
+        </div>
+
+    </section>
+    <!-- End Section -->
+                                <!-- Start Section -->
+        <section class="section">
+            <div class="container">
+                <!-- Start Section Inner -->
+                <div class="section-inner">
+                    <!-- Start Section Header -->
+                    <div class="section-header">
+                        <div class="section-title-sm">
+                            <span>Popular Posts</span>
+                        </div>
+                        <h2 class="section-title">Popular Posts Text</h2>
+                        <p class="section-text lead mb-0">
+                            Popular Posts Description
+                        </p>
+                    </div>
+                    <!-- End Section Header -->
+                    <!-- Start Section Body -->
+                    <div class="section-body">
+                        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3 g-4 justify-content-center">
+                                                            <div class="col" data-aos="zoom-in-down">
+                                    <a href="https://nullsto.edu.pl/post/stop-paying-full-price-the-2025-guide-to-dominating-digital-life-with-edu-and-temp-mail" class="card h-100">
+
+                                        <img loading="lazy" src="https://nullsto.edu.pl/uploads/content/small/gPCK0WViNqRohxb_1760704999.webp"
+                                            alt="Stop Paying Full Price: The 2025 Guide to Dominating Digital Life with EDU and Temp Mail 🚀" />
+                                        <div class="card-body">
+                                            <h3 class="card-title mb-3">
+                                                Stop Paying Full Price: The 2025 Guide to Dominating Digital Life with EDU and Temp Mail 🚀
+                                            </h3>
+                                            <p class="card-text lead">Unlock the internet&#039;s best secrets with NullSto.edu.pl: Get a free .EDU email for massive student discounts on software and tech, and instantly create free temp emails to shield your main inbox from spam and secure your ultimate online privacy.</p>
+                                            <p class="card-text">
+                                                <small
+                                                    class="text-muted">Oct 17, 2025</small>
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                                                            <div class="col" data-aos="zoom-in-down">
+                                    <a href="https://nullsto.edu.pl/post/unlock-the-internet-s-best-secrets-how-to-get-a-free-edu-email-and-why-temporary-mail-is-your-ultimate-privacy-hack" class="card h-100">
+
+                                        <img loading="lazy" src="https://nullsto.edu.pl/uploads/content/small/37D3Gy0wy4WnbO6_1760702291.webp"
+                                            alt="Unlock the Internet&#039;s Best Secrets: How to Get a Free .EDU Email and Why Temporary Mail is Your Ultimate Privacy Hack 🛡️" />
+                                        <div class="card-body">
+                                            <h3 class="card-title mb-3">
+                                                Unlock the Internet&#039;s Best Secrets: How to Get a Free .EDU Email and Why Temporary Mail is Your Ultimate Privacy Hack 🛡️
+                                            </h3>
+                                            <p class="card-text lead">EDU Email vs. Temp Mail: Unlock exclusive student discounts and ensure ultimate online privacy and spam prevention with the Best EDU Email Generator from NullSto.edu.pl.</p>
+                                            <p class="card-text">
+                                                <small
+                                                    class="text-muted">Oct 17, 2025</small>
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                                                    </div>
+                    </div>
+                    <!-- End Section Body -->
+                </div>
+                <!-- End Section Inner -->
+            </div>
+        </section>
+        <!-- End Section -->
+                                    <section class="section">
+            <div class="container">
+                <div class="question section-shapes mt-5" data-aos="fade-up" data-aos-duration="1000">
+                    <h2 class="mb-3">Sign Up Now</h2>
+                    <p class="lead">Sign Up to Get Access to Exclusive Features
+                    </p>
+                    <a href="https://nullsto.edu.pl/register"
+                        class="btn btn-secondary btn-lg">Register Now</a>
+                </div>
+            </div>
+        </section>
+                    <!-- Start Go Up -->
+<div class="go-up">
+    <i class="fa fa-chevron-up"></i>
+</div>
+
+<!-- Start Footer -->
+<footer class="footer">
+    <!-- Start Footer Upper -->
+    <div class="footer-upper">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-sm-2 align-items-center g-4">
+                <div class="col d-flex justify-content-center justify-content-sm-start">
+                    <a href="https://nullsto.edu.pl" class="logo">
+                        <img src="https://nullsto.edu.pl/assets/themes/basic/img/dark_logo.png?t=1760558058" alt="Nullsto" />
+                    </a>
+                </div>
+                <div class="col d-flex justify-content-center justify-content-sm-end">
+                    <!-- Start Footer Links -->
+                    <div class="footer-links">
+                                                    <a                                 href="https://nullsto.edu.pl/blog">
+                                Blog</a>
+                                                    <a                                 href="https://t.me/digitalselling023">
+                                Contact Us</a>
+                                                    <a  target="_blank"                                 href="https://nullsto.edu.pl/page/cookies-policy">
+                                Cookies policy</a>
+                                                    <a  target="_blank"                                 href="https://nullsto.edu.pl/page/privacy-policy">
+                                Privacy policy</a>
+                                                    <a  target="_blank"                                 href="https://nullsto.edu.pl/page/terms-of-service">
+                                Terms of Service</a>
+                                            </div>
+                    <!-- End Footer Links -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Footer Upper -->
+    <!-- Start Footer Lower -->
+    <div class="footer-lower">
+        <div class="container">
+            <p class="text-center mb-0 lead">
+                Nullsto © <span data-year></span> – All Rights Reserved
+            </p>
+        </div>
+    </div>
+    <!-- End Footer Lower -->
+</footer>
+<!-- End Footer -->
+
+
+    
+
+    <!-- jQuery - Essential for most scripts, load first -->
+    <script src="https://nullsto.edu.pl/assets/js/vendor/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap Bundle - Essential for layout, load immediately -->
+    <script src="https://nullsto.edu.pl/assets/js/vendor/bootstrap.bundle.min.js"></script>
+
+    <!-- Load Non-Critical Scripts Asynchronously -->
+    <script src="https://nullsto.edu.pl/assets/js/vendor/lodash.min.js" defer></script>
+    <script src="https://nullsto.edu.pl/assets/js/vendor/clipboard.min.js" defer></script>
+    <script src="https://nullsto.edu.pl/assets/js/vendor/select2.min.js" defer></script>
+    <script src="https://nullsto.edu.pl/assets/js/vendor/moment.min.js" defer></script>
+    <script src="https://nullsto.edu.pl/assets/js/vendor/qrcode.min.js" defer></script>
+    <script src="https://nullsto.edu.pl/assets/js/vendor/axios.min.js" defer></script>
+    <script src="https://nullsto.edu.pl/assets/js/vendor/aos.min.js" defer></script>
+    <script src="https://nullsto.edu.pl/assets/js/vendor/progress.js" defer></script>
+    <!-- Flasher Library - Load at the end -->
+    <script src="https://nullsto.edu.pl/assets/js/vendor/flasher.min.js" defer></script>
+    <!-- Main Script - Typically responsible for page interaction -->
+    <script src="https://nullsto.edu.pl/assets/themes/basic/js/main.js?v=2.2" defer></script>
+    <script>
+        var BASE_PATH = "https://nullsto.edu.pl/";
+        var landing = "Landing",
+            search_history_message = "Not found emails with",
+            history_is_empty_message = "History is empty",
+            active_message = "Active",
+            current_message = "Current",
+            choose_message = "Choose",
+            email_changed_message = "The Email has been successfully updated",
+            email_deleted_message = "The email has been removed",
+            favorited = "Remove from favorites",
+            not_favorited = "Add to favorites",
+            please_wait = "Please Wait",
+            new_message = "New",
+            icon_path = "https://nullsto.edu.pl/assets/themes/basic/img/favicon.png?t=1760558058",
+            fetch_time = "5",
+            limit_error = "Too many requests, Please slow down",
+            flasher_error = "Error",
+            flasher_success = "success";
+    </script>
+    <script src="https://nullsto.edu.pl/assets/themes/basic/js/app.js?v=2.2" defer></script>
+                <script>
+            window.check_recaptcha = true;
+        </script>
+    </body>
+
 </html>

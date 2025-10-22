@@ -1095,11 +1095,24 @@ router.get('/feed', (req, res) => {
 
   (async () => {
     try {
-      const perChannelLimit = preview ? 5 : undefined;
+      // For preview mode, fetch more per channel, then globally limit to top 5 across all channels
+      const perChannelLimit = preview ? undefined : undefined;
       const promises = Array.from(channelIds, id => fetchChannelItems(id, perChannelLimit));
       const settled = await Promise.allSettled(promises);
       let results = settled.flatMap(r => r.status === 'fulfilled' ? r.value : []);
-      results.sort((a, b) => b.uploaded - a.uploaded);
+      // Filter out shorts if any flag present
+      results = results.filter(item => !item.isShort);
+      // Sort by newest first, then by highest views
+      results.sort((a, b) => {
+        if (b.uploaded !== a.uploaded) return b.uploaded - a.uploaded;
+        const av = Number(a.views || 0);
+        const bv = Number(b.views || 0);
+        return bv - av;
+      });
+      // If preview, return only the top 5 across all channels
+      if (preview) {
+        results = results.slice(0, 5);
+      }
       return sendJson(res, results, 'private');
     } catch (e) {
       return authFailure(res);
