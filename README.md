@@ -4,7 +4,7 @@
 
 A powerful Node.js/Express.js API that provides access to multiple music streaming services including YouTube Music, YouTube Search, Last.fm, Saavn, Piped, and Invidious. Perfect for building music applications, playlists, and discovery features.
 
-**🌐 Frontend Demo:** [https://shashwat-coding.github.io/ytify-backend](https://shashwat-coding.github.io/ytify-backend)
+**🌐 Backend BaseUrl:** [https://ytify-backend.vercel.app](https://ytify-backend.vercel.app)
 
 ![API Status](https://img.shields.io/badge/API-Online-green)
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-brightgreen)
