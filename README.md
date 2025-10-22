@@ -44,7 +44,7 @@ The API will be available at `http://localhost:5000`
 ### 🌐 Frontend Demo
 
 Experience the API in action with our live frontend demo:
-- **Live Demo:** [https://shashwat-coding.github.io/ytify-backend](https://shashwat-coding.github.io/ytify-backend)
+- **Live Demo:** [https://ytify-backend.vercel.app](https://ytify-backend.vercel.app)
 - **Features:** Interactive API testing, real-time search, and streaming capabilities
 - **Source:** Built with modern web technologies showcasing all API endpoints
 
