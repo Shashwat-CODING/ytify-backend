@@ -1,6 +1,10 @@
-# 🎵 Music API - Comprehensive Music Streaming API
+# 🎵 ytify-backend
+
+![ytify-backend](icon.png)
 
 A powerful Node.js/Express.js API that provides access to multiple music streaming services including YouTube Music, YouTube Search, Last.fm, Saavn, Piped, and Invidious. Perfect for building music applications, playlists, and discovery features.
+
+**🌐 Frontend Demo:** [https://shashwat-coding.github.io/ytify-backend](https://shashwat-coding.github.io/ytify-backend)
 
 ![API Status](https://img.shields.io/badge/API-Online-green)
 ![Node.js](https://img.shields.io/badge/Node.js-20.x-brightgreen)
@@ -36,6 +40,13 @@ npm start
 ```
 
 The API will be available at `http://localhost:5000`
+
+### 🌐 Frontend Demo
+
+Experience the API in action with our live frontend demo:
+- **Live Demo:** [https://shashwat-coding.github.io/ytify-backend](https://shashwat-coding.github.io/ytify-backend)
+- **Features:** Interactive API testing, real-time search, and streaming capabilities
+- **Source:** Built with modern web technologies showcasing all API endpoints
 
 ### Environment Variables (Optional)
 
@@ -319,20 +330,22 @@ The API automatically fetches and caches streaming instances from remote sources
 
 ### Project Structure
 ```
-js/
-├── app.js                    # Main Express application
-├── api/
-│   └── app.js               # Vercel serverless entry point
-├── lib/                     # Custom libraries
-│   ├── ytmusicapi.js       # YouTube Music API
-│   ├── youtube-search.js   # YouTube Search API
-│   ├── lastfm_api.js       # Last.fm integration
-│   └── get_youtube_song.js # YouTube song helper
-├── routes/
-│   └── api.js              # Main API routes
-├── vercel.json             # Vercel configuration
-├── package.json            # Dependencies
-└── README.md               # This file
+ytify-backend/
+├── js/                      # Main project directory
+│   ├── app.js              # Main Express application
+│   ├── api/
+│   │   └── app.js          # Vercel serverless entry point
+│   ├── lib/                # Custom libraries
+│   │   ├── ytmusicapi.js  # YouTube Music API
+│   │   ├── youtube-search.js # YouTube Search API
+│   │   ├── lastfm_api.js  # Last.fm integration
+│   │   └── get_youtube_song.js # YouTube song helper
+│   ├── routes/
+│   │   └── api.js          # Main API routes
+│   ├── vercel.json         # Vercel configuration
+│   ├── package.json        # Dependencies
+│   ├── icon.png           # Project icon
+│   └── README.md          # This file
 ```
 
 ### Available Scripts
@@ -400,9 +413,16 @@ MIT License - see LICENSE file for details.
 ## 🆘 Support
 
 For issues and questions:
-1. Check the existing issues
+1. Check the existing issues on [GitHub](https://github.com/Shashwat-CODING/ytify-backend/issues)
 2. Create a new issue with detailed description
 3. Include logs and request/response examples
+4. Visit our [live demo](https://shashwat-coding.github.io/ytify-backend) to test the API
+
+## 🔗 Links
+
+- **GitHub Repository:** [https://github.com/Shashwat-CODING/ytify-backend](https://github.com/Shashwat-CODING/ytify-backend)
+- **Live Demo:** [https://shashwat-coding.github.io/ytify-backend](https://shashwat-coding.github.io/ytify-backend)
+- **API Documentation:** Available in this README and through the live demo
 
 ## 🔄 Changelog
 
