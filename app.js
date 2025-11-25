@@ -31,13 +31,13 @@ app.set('etag', false);
 app.use((req, res, next) => {
   const originalSend = res.send;
   const originalStatus = res.status;
-  
-  res.status = function(code) {
+
+  res.status = function (code) {
     console.log(`[RESPONSE] Status set to ${code} for ${req.method} ${req.originalUrl}`);
     return originalStatus.call(this, code);
   };
-  
-  res.send = function(body) {
+
+  res.send = function (body) {
     console.log(`[RESPONSE] Sending response for ${req.method} ${req.originalUrl}:`, {
       statusCode: res.statusCode,
       headers: res.getHeaders(),
@@ -45,7 +45,7 @@ app.use((req, res, next) => {
     });
     return originalSend.call(this, body);
   };
-  
+
   next();
 });
 
@@ -59,6 +59,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Initialize clients
 const ytmusic = new YTMusic();
+ytmusic.initialize();
 const youtubeSearch = new YouTubeSearch();
 
 // Make clients available to routes
