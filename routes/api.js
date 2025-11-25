@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { getSimilarTracks, LASTFM_API_KEY } = require('../lib/lastfm_api');
 const { getYouTubeSong } = require('../lib/get_youtube_song');
+const youtubeiClient = require('../lib/youtubei-client');
 const axios = require('axios');
 
 const ALLOWED_FILTERS = new Set([
@@ -1165,7 +1166,7 @@ router.get('/feed/unauthenticated', (req, res) => {
 });
 
 // ... existing imports
-const youtubeiClient = require('../lib/youtubei-client');
+
 
 // ... existing code ...
 
@@ -1293,6 +1294,48 @@ router.get('/feed/channels=:channels', (req, res) => {
       return sendJson(res, [], 'public, s-maxage=120');
     }
   })();
+});
+
+/**
+ * @swagger
+ * /api/trending:
+ *   get:
+ *     summary: Get trending songs, videos, and playlists
+ *     tags: [Trending]
+ *     responses:
+ *       200:
+ *         description: Trending content
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     songs:
+ *                       type: array
+ *                     videos:
+ *                       type: array
+ *                     playlists:
+ *                       type: array
+ */
+router.get('/trending', async (req, res) => {
+  try {
+    const trending = await youtubeiClient.getTrending();
+    res.json({
+      success: true,
+      data: trending
+    });
+  } catch (error) {
+    console.error('Trending API error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch trending content'
+    });
+  }
 });
 
 module.exports = router;
