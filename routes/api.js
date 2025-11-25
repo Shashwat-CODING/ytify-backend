@@ -356,6 +356,14 @@ function parseVideoFromBrowse(video, channelId, channelName) {
     ) ||
     false;
 
+  // Extract thumbnail
+  let thumbnail = '';
+  if (video?.thumbnail?.thumbnails?.length > 0) {
+    // Get the highest resolution thumbnail (usually the last one)
+    const thumbnails = video.thumbnail.thumbnails;
+    thumbnail = thumbnails[thumbnails.length - 1].url;
+  }
+
   return {
     id,
     authorId: channelId,
@@ -364,7 +372,8 @@ function parseVideoFromBrowse(video, channelId, channelName) {
     views: views.toString(),
     uploaded: uploaded.toString(),
     title,
-    isShort
+    isShort,
+    thumbnail
   };
 }
 
