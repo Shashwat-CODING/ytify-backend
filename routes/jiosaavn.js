@@ -1,5 +1,5 @@
-const express = require('express');
-const JioSaavn = require('../lib/jiosaavn');
+import express from 'express';
+import JioSaavn from '../lib/jiosaavn.js';
 const router = express.Router();
 
 const jiosaavn = new JioSaavn();
@@ -108,4 +108,4 @@ router.get('/jiosaavn/search/all', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

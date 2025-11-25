@@ -1,7 +1,7 @@
-const express = require('express');
-const axios = require('axios');
+import express from 'express';
+import axios from 'axios';
 const router = express.Router();
-const { getArtistsData } = require('../lib/youtube_artist');
+import { getArtistsData } from '../lib/youtube_artist.js';
 
 /**
  * @swagger
@@ -174,4 +174,4 @@ router.get('/artist/:artistId', async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

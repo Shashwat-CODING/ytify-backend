@@ -1,21 +1,22 @@
-const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const swaggerJsdoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
-require('dotenv').config();
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerUi from 'swagger-ui-express';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Import route modules
-const apiRoutes = require('./routes/api');
-const entitiesRoutes = require('./routes/entities');
-const exploreRoutes = require('./routes/explore');
-const youtubeRoutes = require('./routes/youtube');
-const jiosaavnRoutes = require('./routes/jiosaavn');
+import apiRoutes from './routes/api.js';
+import entitiesRoutes from './routes/entities.js';
+import exploreRoutes from './routes/explore.js';
+import youtubeRoutes from './routes/youtube.js';
+import jiosaavnRoutes from './routes/jiosaavn.js';
 
 // Import libraries
-const YTMusic = require('./lib/ytmusicapi');
-const YouTubeSearch = require('./lib/youtube-search');
+import YTMusic from './lib/ytmusicapi.js';
+import YouTubeSearch from './lib/youtube-search.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -132,4 +133,4 @@ if (!process.env.VERCEL) {
   });
 }
 
-module.exports = app;
+export default app;

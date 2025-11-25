@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 
 const router = express.Router();
-const { getSimilarTracks, LASTFM_API_KEY } = require('../lib/lastfm_api');
-const { getYouTubeSong } = require('../lib/get_youtube_song');
-const axios = require('axios');
+import { getSimilarTracks, LASTFM_API_KEY } from '../lib/lastfm_api.js';
+import { getYouTubeSong } from '../lib/get_youtube_song.js';
+import axios from 'axios';
 
 const ALLOWED_FILTERS = new Set([
   'songs',
@@ -1638,4 +1638,4 @@ router.get('/feed/channels=:channels', (req, res) => {
   })();
 });
 
-module.exports = router;
+export default router;
