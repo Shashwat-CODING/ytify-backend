@@ -1,6 +1,7 @@
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
+const youtubeiClient = require('../lib/youtubei-client');
 
 /**
  * @swagger
@@ -24,7 +25,7 @@ router.get('/songs/:videoId', async (req, res) => {
   try {
     const { videoId } = req.params;
     const ytmusic = req.app.locals.ytmusic;
-    
+
     const data = await ytmusic.getSong(videoId);
     res.json(data);
   } catch (error) {
@@ -54,9 +55,8 @@ router.get('/songs/:videoId', async (req, res) => {
 router.get('/albums/:browseId', async (req, res) => {
   try {
     const { browseId } = req.params;
-    const ytmusic = req.app.locals.ytmusic;
-    
-    const data = await ytmusic.getAlbum(browseId);
+    // Use the new youtubei client
+    const data = await youtubeiClient.getAlbum(browseId);
     res.json(data);
   } catch (error) {
     console.error('Album error:', error);
@@ -86,7 +86,7 @@ router.get('/artists/:browseId', async (req, res) => {
   try {
     const { browseId } = req.params;
     const ytmusic = req.app.locals.ytmusic;
-    
+
     const data = await ytmusic.getArtist(browseId);
     res.json(data);
   } catch (error) {
@@ -122,10 +122,8 @@ router.get('/artists/:browseId', async (req, res) => {
 router.get('/playlists/:playlistId', async (req, res) => {
   try {
     const { playlistId } = req.params;
-    const { limit = 100 } = req.query;
-    const ytmusic = req.app.locals.ytmusic;
-    
-    const data = await ytmusic.getPlaylist(playlistId, parseInt(limit));
+    // Use the new youtubei client
+    const data = await youtubeiClient.getPlaylist(playlistId);
     res.json(data);
   } catch (error) {
     console.error('Playlist error:', error);
@@ -161,9 +159,9 @@ router.get('/artist/:artistId', async (req, res) => {
   try {
     const { artistId } = req.params;
     const { country = 'US' } = req.query;
-    
+
     const YOUTUBE_MUSIC_API_URL = 'https://summer-darkness-1435.bob17040246.workers.dev/youtubei/v1/browse?prettyPrint=false';
-    
+
     const body = {
       browseId: artistId,
       context: {
