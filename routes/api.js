@@ -780,17 +780,20 @@ router.get('/stream', async (req, res) => {
   }
 
   try {
-    // Fetch from all sources in parallel
+    // Fetch from all sources in parallel but process in priority order
     console.log(`[STREAM] Fetching for ${id} (${title} - ${artist}) from all sources...`);
-    const [saavnResult, pipedResult, invidiousResult] = await Promise.all([
-      fetchFromSaavn(title, artist),
-      fetchFromPiped(id),
-      fetchFromInvidious(id)
-    ]);
 
-    // Check results in priority order: Saavn > Piped > Invidious
+    // Start all requests concurrently
+    const saavnPromise = fetchFromSaavn(title, artist);
+    const pipedPromise = fetchFromPiped(id);
+    const invidiousPromise = fetchFromInvidious(id);
+
+    // 1. Check Saavn first (Highest Priority)
+    // We await it individually so we don't wait for others if this succeeds
+    const saavnResult = await saavnPromise;
     if (saavnResult.success) {
-      res.json({
+      console.log('[STREAM] Saavn success, returning early.');
+      return res.json({
         success: true,
         service: saavnResult.service,
         // per request: omit instance for Saavn responses
@@ -802,8 +805,14 @@ router.get('/stream', async (req, res) => {
         requestedArtist: artist,
         timestamp: new Date().toISOString()
       });
-    } else if (pipedResult.success) {
-      res.json({
+    }
+
+    // 2. Check Piped (Medium Priority)
+    // If Saavn failed, we wait for Piped
+    const pipedResult = await pipedPromise;
+    if (pipedResult.success) {
+      console.log('[STREAM] Piped success, returning.');
+      return res.json({
         success: true,
         service: pipedResult.service,
         instance: pipedResult.instance,
@@ -814,8 +823,14 @@ router.get('/stream', async (req, res) => {
         requestedArtist: artist,
         timestamp: new Date().toISOString()
       });
-    } else if (invidiousResult.success) {
-      res.json({
+    }
+
+    // 3. Check Invidious (Low Priority)
+    // If Piped also failed, we wait for Invidious
+    const invidiousResult = await invidiousPromise;
+    if (invidiousResult.success) {
+      console.log('[STREAM] Invidious success, returning.');
+      return res.json({
         success: true,
         service: invidiousResult.service,
         instance: invidiousResult.instance,
@@ -826,17 +841,18 @@ router.get('/stream', async (req, res) => {
         requestedArtist: artist,
         timestamp: new Date().toISOString()
       });
-    } else {
-      // All sources failed
-      res.status(404).json({
-        success: false,
-        error: 'No streaming data found from any source',
-        requestedId: id,
-        requestedTitle: title,
-        requestedArtist: artist,
-        timestamp: new Date().toISOString()
-      });
     }
+
+    // All sources failed
+    console.log('[STREAM] All sources failed.');
+    res.status(404).json({
+      success: false,
+      error: 'No streaming data found from any source',
+      requestedId: id,
+      requestedTitle: title,
+      requestedArtist: artist,
+      timestamp: new Date().toISOString()
+    });
   } catch (error) {
     console.error('Stream endpoint error:', error);
     res.status(500).json({
