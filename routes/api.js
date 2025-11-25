@@ -780,11 +780,16 @@ router.get('/stream', async (req, res) => {
   }
 
   try {
-    // First check Saavn
-    const saavnResult = await fetchFromSaavn(title, artist);
+    // Fetch from all sources in parallel
+    console.log(`[STREAM] Fetching for ${id} (${title} - ${artist}) from all sources...`);
+    const [saavnResult, pipedResult, invidiousResult] = await Promise.all([
+      fetchFromSaavn(title, artist),
+      fetchFromPiped(id),
+      fetchFromInvidious(id)
+    ]);
 
+    // Check results in priority order: Saavn > Piped > Invidious
     if (saavnResult.success) {
-      // Saavn found a match, return it
       res.json({
         success: true,
         service: saavnResult.service,
@@ -797,49 +802,40 @@ router.get('/stream', async (req, res) => {
         requestedArtist: artist,
         timestamp: new Date().toISOString()
       });
+    } else if (pipedResult.success) {
+      res.json({
+        success: true,
+        service: pipedResult.service,
+        instance: pipedResult.instance,
+        streamingUrls: pipedResult.streamingUrls,
+        metadata: pipedResult.metadata,
+        requestedId: id,
+        requestedTitle: title,
+        requestedArtist: artist,
+        timestamp: new Date().toISOString()
+      });
+    } else if (invidiousResult.success) {
+      res.json({
+        success: true,
+        service: invidiousResult.service,
+        instance: invidiousResult.instance,
+        streamingUrls: invidiousResult.streamingUrls,
+        metadata: invidiousResult.metadata,
+        requestedId: id,
+        requestedTitle: title,
+        requestedArtist: artist,
+        timestamp: new Date().toISOString()
+      });
     } else {
-      // Saavn failed, fetch from all other sources in parallel
-      const [pipedResult, invidiousResult] = await Promise.all([
-        fetchFromPiped(id),
-        fetchFromInvidious(id)
-      ]);
-
-      // Check results in priority order: Piped first, then Invidious
-      if (pipedResult.success) {
-        res.json({
-          success: true,
-          service: pipedResult.service,
-          instance: pipedResult.instance,
-          streamingUrls: pipedResult.streamingUrls,
-          metadata: pipedResult.metadata,
-          requestedId: id,
-          requestedTitle: title,
-          requestedArtist: artist,
-          timestamp: new Date().toISOString()
-        });
-      } else if (invidiousResult.success) {
-        res.json({
-          success: true,
-          service: invidiousResult.service,
-          instance: invidiousResult.instance,
-          streamingUrls: invidiousResult.streamingUrls,
-          metadata: invidiousResult.metadata,
-          requestedId: id,
-          requestedTitle: title,
-          requestedArtist: artist,
-          timestamp: new Date().toISOString()
-        });
-      } else {
-        // All sources failed
-        res.status(404).json({
-          success: false,
-          error: 'No streaming data found from any source',
-          requestedId: id,
-          requestedTitle: title,
-          requestedArtist: artist,
-          timestamp: new Date().toISOString()
-        });
-      }
+      // All sources failed
+      res.status(404).json({
+        success: false,
+        error: 'No streaming data found from any source',
+        requestedId: id,
+        requestedTitle: title,
+        requestedArtist: artist,
+        timestamp: new Date().toISOString()
+      });
     }
   } catch (error) {
     console.error('Stream endpoint error:', error);
