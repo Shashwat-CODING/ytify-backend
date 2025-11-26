@@ -1334,6 +1334,32 @@ router.get('/feed/channels=:channels', (req, res) => {
  *                     playlists:
  *                       type: array
  */
+/**
+ * @swagger
+ * /api/trending:
+ *   get:
+ *     summary: Get trending songs, videos, and playlists
+ *     tags: [Trending]
+ *     responses:
+ *       200:
+ *         description: Trending content
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: object
+ *                   properties:
+ *                     songs:
+ *                       type: array
+ *                     videos:
+ *                       type: array
+ *                     playlists:
+ *                       type: array
+ */
 router.get('/trending', async (req, res) => {
   try {
     const trending = await youtubeiClient.getTrending();
@@ -1346,6 +1372,72 @@ router.get('/trending', async (req, res) => {
     res.status(500).json({
       success: false,
       error: 'Failed to fetch trending content'
+    });
+  }
+});
+
+/**
+ * @swagger
+ * /api/related/{id}:
+ *   get:
+ *     summary: Get related videos for a given video ID
+ *     tags: [Related]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Video ID
+ *     responses:
+ *       200:
+ *         description: Related videos (excluding shorts)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       videoId:
+ *                         type: string
+ *                       title:
+ *                         type: string
+ *                       artist:
+ *                         type: string
+ *                       thumbnail:
+ *                         type: string
+ *                       duration:
+ *                         type: string
+ *                       duration_seconds:
+ *                         type: number
+ */
+router.get('/related/:id', async (req, res) => {
+  try {
+    const videoId = req.params.id;
+
+    if (!videoId || String(videoId).trim() === '') {
+      return res.status(400).json({
+        success: false,
+        error: 'Video ID is required'
+      });
+    }
+
+    const related = await youtubeiClient.getRelated(videoId);
+    res.json({
+      success: true,
+      data: related
+    });
+  } catch (error) {
+    console.error('Related videos API error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch related videos'
     });
   }
 });
