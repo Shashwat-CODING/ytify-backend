@@ -1,3 +1,20 @@
+import { Buffer } from 'node:buffer';
+import process from 'node:process';
+import EventEmitter from 'node:events';
+import { Readable, Writable, Transform, Duplex, PassThrough } from 'node:stream';
+
+// Polyfill globals
+globalThis.Buffer = Buffer;
+globalThis.process = process;
+globalThis.EventEmitter = EventEmitter;
+
+// Mock Stream global if needed by some legacy libs
+const Stream = {
+    Readable, Writable, Transform, Duplex, PassThrough,
+    // Some libs might check Stream.prototype or similar, but this is usually enough
+};
+globalThis.Stream = Stream;
+
 const app = require('./app');
 
 export default {
