@@ -1,7 +1,7 @@
 name = "ytx"
 main = "worker.js"
 compatibility_date = "2024-11-01"
-node_compat = true
+nodejs_compat = true
 
 [vars]
 NODE_ENV = "production"
