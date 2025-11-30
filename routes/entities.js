@@ -184,9 +184,16 @@ router.get('/artist/:artistId', async (req, res) => {
 
     const data = response.data;
 
+    const header = data?.header?.musicImmersiveHeaderRenderer || data?.header?.musicVisualHeaderRenderer;
+    const artistHeader = header?.title?.runs?.[0]?.text;
+
+    let artistAvatar = header?.thumbnail?.musicThumbnailRenderer?.thumbnail?.thumbnails?.[0]?.url;
+    if (header?.foregroundThumbnail?.musicThumbnailRenderer?.thumbnail?.thumbnails?.[0]?.url) {
+      artistAvatar = header.foregroundThumbnail.musicThumbnailRenderer.thumbnail.thumbnails[0].url;
+    }
+
     // Parse like the Python logic
     const contents = data?.contents?.singleColumnBrowseResultsRenderer?.tabs?.[0]?.tabRenderer?.content?.sectionListRenderer?.contents || [];
-    const artistHeader = data?.header?.musicImmersiveHeaderRenderer?.title?.runs?.[0]?.text;
 
     // Top songs shelf
     let playlistId = null;
@@ -252,6 +259,7 @@ router.get('/artist/:artistId', async (req, res) => {
 
     res.json({
       artistName: artistHeader,
+      artistAvatar,
       playlistId,
       recommendedArtists,
       featuredOnPlaylists
