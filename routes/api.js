@@ -784,7 +784,7 @@ router.get('/music/find', async (req, res) => {
     const nName = normalize(name);
     const artistsList = artist.split(',').map(a => normalize(a));
 
-    // Find best match
+    // Find best match in songs
     let bestMatch = searchResults.results.find(song => {
       const nSongName = normalize(song.title);
       const songArtists = (song.artists || []).map(a => normalize(a.name));
@@ -797,8 +797,28 @@ router.get('/music/find', async (req, res) => {
       return titleMatch && artistMatch;
     });
 
+    // If no match in songs, try searching videos
+    if (!bestMatch) {
+      console.log(`[FIND] No song match found, trying videos filter...`);
+      const videoResults = await ytmusic.search(query, 'videos');
+
+      if (videoResults && videoResults.results && videoResults.results.length > 0) {
+        bestMatch = videoResults.results.find(video => {
+          const nVideoTitle = normalize(video.title);
+          const videoArtists = (video.artists || []).map(a => normalize(a.name));
+
+          const titleMatch = nVideoTitle.includes(nName) || nName.includes(nVideoTitle);
+          const artistMatch = artistsList.some(a =>
+            videoArtists.some(sa => sa.includes(a) || a.includes(sa))
+          );
+
+          return titleMatch && artistMatch;
+        });
+      }
+    }
+
     if (bestMatch) {
-      // Fetch full song details to get more metadata if needed,
+      // Fetch full song details to get more metadata if needed, 
       // but search result usually has enough for basic metadata.
       // Let's return what we have from search to be fast.
       return res.json({
