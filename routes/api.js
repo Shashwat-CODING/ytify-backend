@@ -724,6 +724,105 @@ async function fetchFromInvidious(videoId) {
 
 /**
  * @swagger
+ * /api/music/find:
+ *   get:
+ *     summary: Find a song by name and artist
+ *     tags: [Music]
+ *     parameters:
+ *       - in: query
+ *         name: name
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Name of the song
+ *       - in: query
+ *         name: artist
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Name of the artist (comma separated for multiple)
+ *     responses:
+ *       200:
+ *         description: Song metadata
+ *       400:
+ *         description: Missing parameters
+ *       404:
+ *         description: Song not found
+ */
+router.get('/music/find', async (req, res) => {
+  const { name, artist } = req.query;
+
+  if (!name || !artist) {
+    return res.status(400).json({
+      success: false,
+      error: 'Missing required parameters: name and artist are required'
+    });
+  }
+
+  try {
+    const query = `${name} ${artist}`;
+    console.log(`[FIND] Searching for: ${query}`);
+
+    // Use the ytmusic client from app.locals
+    const ytmusic = req.app.locals.ytmusic;
+    const searchResults = await ytmusic.search(query, 'songs');
+
+    if (!searchResults || !searchResults.results || searchResults.results.length === 0) {
+      return res.status(404).json({
+        success: false,
+        error: 'Song not found'
+      });
+    }
+
+    // Normalize helper
+    const normalize = (s) => String(s || '')
+      .normalize('NFKD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/gi, '')
+      .toLowerCase();
+
+    const nName = normalize(name);
+    const artistsList = artist.split(',').map(a => normalize(a));
+
+    // Find best match
+    let bestMatch = searchResults.results.find(song => {
+      const nSongName = normalize(song.title);
+      const songArtists = (song.artists || []).map(a => normalize(a.name));
+
+      const titleMatch = nSongName.includes(nName) || nName.includes(nSongName);
+      const artistMatch = artistsList.some(a =>
+        songArtists.some(sa => sa.includes(a) || a.includes(sa))
+      );
+
+      return titleMatch && artistMatch;
+    });
+
+    if (bestMatch) {
+      // Fetch full song details to get more metadata if needed,
+      // but search result usually has enough for basic metadata.
+      // Let's return what we have from search to be fast.
+      return res.json({
+        success: true,
+        data: bestMatch
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        error: 'Song not found after filtering'
+      });
+    }
+
+  } catch (error) {
+    console.error('[FIND] Error:', error);
+    return res.status(500).json({
+      success: false,
+      error: error.message
+    });
+  }
+});
+
+/**
+ * @swagger
  * /api/stream:
  *   get:
  *     summary: Get streaming data from multiple sources
