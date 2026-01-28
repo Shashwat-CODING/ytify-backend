@@ -836,11 +836,11 @@ router.get('/music/find', async (req, res) => {
 
 /**
  * @swagger
- * /api/stream:
+ * /api/stream/{id}:
  *   get:
  *     summary: Get streaming data from Invidious
  *     parameters:
- *       - in: query
+ *       - in: path
  *         name: id
  *         required: true
  *         schema:
@@ -864,8 +864,8 @@ router.get('/music/find', async (req, res) => {
  *       400:
  *         description: Missing video ID
  */
-router.get('/stream', async (req, res) => {
-  const { id } = req.query;
+router.get('/stream/:id', async (req, res) => {
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).json({
