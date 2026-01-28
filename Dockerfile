@@ -24,9 +24,9 @@ COPY . .
 
 ENV NODE_ENV=production
 # HF Spaces exposes a dynamic $PORT; default to 7860 for local runs
-ENV PORT=7860
+ENV PORT=8000
 
-EXPOSE 7860
+EXPOSE 8000
 
 CMD ["node", "app.js"]
 
