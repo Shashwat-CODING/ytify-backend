@@ -620,17 +620,11 @@ async function fetchFromPiped(videoId) {
 }
 
 async function fetchFromInvidious(videoId) {
-  const instances = await getDynamicInstances();
-  const invidiousInstances = instances.invidious || [];
-
-  if (invidiousInstances.length === 0) {
-    return {
-      service: 'invidious',
-      instance: 'none',
-      success: false,
-      error: 'No Invidious instances available'
-    };
-  }
+  // Hardcoded instances as per request
+  const invidiousInstances = [
+    "https://inv-veltrix.zeabur.app",
+    "https://inv-veltrix-2.zeabur.app"
+  ];
 
   // Try instances one by one until we find a working one
   for (const instance of invidiousInstances) {
@@ -727,7 +721,6 @@ async function fetchFromInvidious(videoId) {
  * /api/music/find:
  *   get:
  *     summary: Find a song by name and artist
- *     tags: [Music]
  *     parameters:
  *       - in: query
  *         name: name
@@ -845,30 +838,17 @@ router.get('/music/find', async (req, res) => {
  * @swagger
  * /api/stream:
  *   get:
- *     summary: Get streaming data from multiple sources
- *     tags: [Stream]
+ *     summary: Get streaming data from Invidious
  *     parameters:
  *       - in: query
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: Video ID for Piped/Invidious
- *       - in: query
- *         name: title
- *         required: true
- *         schema:
- *           type: string
- *         description: Song title for Saavn
- *       - in: query
- *         name: artist
- *         required: true
- *         schema:
- *           type: string
- *         description: Artist name for Saavn
+ *         description: Video ID
  *     responses:
  *       200:
- *         description: Streaming data from all sources
+ *         description: Streaming data from Invidious
  *         content:
  *           application/json:
  *             schema:
@@ -879,74 +859,27 @@ router.get('/music/find', async (req, res) => {
  *                 data:
  *                   type: object
  *                   properties:
- *                     saavn:
- *                       type: object
- *                     piped:
- *                       type: array
  *                     invidious:
  *                       type: array
  *       400:
- *         description: Missing required parameters
+ *         description: Missing video ID
  */
 router.get('/stream', async (req, res) => {
-  const { id, title, artist } = req.query;
+  const { id } = req.query;
 
-  if (!id || !title || !artist) {
+  if (!id) {
     return res.status(400).json({
       success: false,
-      error: 'Missing required parameters: id, title, and artist are required'
+      error: 'Missing required parameter: id is required'
     });
   }
 
   try {
-    // Fetch from all sources in parallel but process in priority order
-    console.log(`[STREAM] Fetching for ${id} (${title} - ${artist}) from all sources...`);
+    // Only fetch from Invidious
+    console.log(`[STREAM] Fetching for ${id} from Invidious...`);
 
-    // Start all requests concurrently
-    const saavnPromise = fetchFromSaavn(title, artist);
-    const pipedPromise = fetchFromPiped(id);
-    const invidiousPromise = fetchFromInvidious(id);
+    const invidiousResult = await fetchFromInvidious(id);
 
-    // 1. Check Saavn first (Highest Priority)
-    // We await it individually so we don't wait for others if this succeeds
-    const saavnResult = await saavnPromise;
-    if (saavnResult.success) {
-      console.log('[STREAM] Saavn success, returning early.');
-      return res.json({
-        success: true,
-        service: saavnResult.service,
-        // per request: omit instance for Saavn responses
-        streamUrl: saavnResult.streamUrl || null,
-        streamingUrls: saavnResult.streamingUrls,
-        metadata: saavnResult.metadata,
-        requestedId: id,
-        requestedTitle: title,
-        requestedArtist: artist,
-        timestamp: new Date().toISOString()
-      });
-    }
-
-    // 2. Check Piped (Medium Priority)
-    // If Saavn failed, we wait for Piped
-    const pipedResult = await pipedPromise;
-    if (pipedResult.success) {
-      console.log('[STREAM] Piped success, returning.');
-      return res.json({
-        success: true,
-        service: pipedResult.service,
-        instance: pipedResult.instance,
-        streamingUrls: pipedResult.streamingUrls,
-        metadata: pipedResult.metadata,
-        requestedId: id,
-        requestedTitle: title,
-        requestedArtist: artist,
-        timestamp: new Date().toISOString()
-      });
-    }
-
-    // 3. Check Invidious (Low Priority)
-    // If Piped also failed, we wait for Invidious
-    const invidiousResult = await invidiousPromise;
     if (invidiousResult.success) {
       console.log('[STREAM] Invidious success, returning.');
       return res.json({
@@ -956,20 +889,16 @@ router.get('/stream', async (req, res) => {
         streamingUrls: invidiousResult.streamingUrls,
         metadata: invidiousResult.metadata,
         requestedId: id,
-        requestedTitle: title,
-        requestedArtist: artist,
         timestamp: new Date().toISOString()
       });
     }
 
-    // All sources failed
-    console.log('[STREAM] All sources failed.');
+    // Failed
+    console.log('[STREAM] Invidious failed.');
     res.status(404).json({
       success: false,
-      error: 'No streaming data found from any source',
+      error: 'No streaming data found from Invidious',
       requestedId: id,
-      requestedTitle: title,
-      requestedArtist: artist,
       timestamp: new Date().toISOString()
     });
   } catch (error) {
@@ -979,8 +908,6 @@ router.get('/stream', async (req, res) => {
       error: 'Internal server error',
       message: error.message,
       requestedId: id,
-      requestedTitle: title,
-      requestedArtist: artist,
       timestamp: new Date().toISOString()
     });
   }
@@ -1157,9 +1084,50 @@ router.get('/search/suggestions/debug', async (req, res) => {
 });
 
 /**
- * GET /api/similar
- * Query params: title, artist, limit (optional, default 5)
- * Uses Last.fm to fetch similar tracks, then concurrently fetches YouTube matches.
+ * @swagger
+ * /api/similar:
+ *   get:
+ *     summary: Get similar songs based on Last.fm and YouTube
+ *     parameters:
+ *       - in: query
+ *         name: title
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Song title
+ *       - in: query
+ *         name: artist
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Artist name
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *           default: 5
+ *         description: Number of similar tracks to return
+ *     responses:
+ *       200:
+ *         description: List of similar songs from YouTube
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                   title:
+ *                     type: string
+ *                   artist:
+ *                     type: string
+ *                   # Add other properties as needed based on getYouTubeSong output
+ *       400:
+ *         description: Missing title or artist parameter
+ *       500:
+ *         description: Internal server error
  */
 router.get('/similar', async (req, res) => {
   try {
@@ -1220,7 +1188,32 @@ function authFailure(res) {
   }));
 }
 
-// GET /api/feed?authToken=...
+/**
+ * @swagger
+ * /api/feed:
+ *   get:
+ *     summary: Get authenticated user feed
+ *     parameters:
+ *       - in: query
+ *         name: authToken
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Session auth token
+ *       - in: query
+ *         name: preview
+ *         schema:
+ *           type: integer
+ *           enum: [0, 1]
+ *         description: If 1, returns a limited preview
+ *     responses:
+ *       200:
+ *         description: User feed items
+ *       400:
+ *         description: Missing auth token
+ *       401:
+ *         description: Authentication failed
+ */
 router.get('/feed', (req, res) => {
   const authToken = req.query.authToken;
   const preview = req.query.preview === '1' || req.query.preview === 1;
@@ -1261,7 +1254,30 @@ router.get('/feed', (req, res) => {
   })();
 });
 
-// GET /api/feed/unauthenticated?channels=UCxxx,UCyyy
+/**
+ * @swagger
+ * /api/feed/unauthenticated:
+ *   get:
+ *     summary: Get feed for unauthenticated users based on provided channels
+ *     parameters:
+ *       - in: query
+ *         name: channels
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Comma-separated list of channel IDs
+ *       - in: query
+ *         name: preview
+ *         schema:
+ *           type: integer
+ *           enum: [0, 1]
+ *         description: If 1, returns a limited preview
+ *     responses:
+ *       200:
+ *         description: Feed items
+ *       400:
+ *         description: No valid channel IDs provided
+ */
 router.get('/feed/unauthenticated', (req, res) => {
   const channelsParam = req.query.channels;
   const preview = req.query.preview === '1' || req.query.preview === 1;
@@ -1301,7 +1317,26 @@ router.get('/feed/unauthenticated', (req, res) => {
 
 // ... existing code ...
 
-// GET /api/album/:id - Fetch album data from YouTube Music
+/**
+ * @swagger
+ * /api/album/{id}:
+ *   get:
+ *     summary: Fetch album data from YouTube Music
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Album ID
+ *     responses:
+ *       200:
+ *         description: Album data
+ *       400:
+ *         description: Album ID is required
+ *       500:
+ *         description: Failed to fetch album data
+ */
 router.get('/album/:id', async (req, res) => {
   const albumId = req.params.id;
 
@@ -1324,7 +1359,26 @@ router.get('/album/:id', async (req, res) => {
   }
 });
 
-// GET /api/playlist/:id - Fetch playlist data from YouTube Music
+/**
+ * @swagger
+ * /api/playlist/{id}:
+ *   get:
+ *     summary: Fetch playlist data from YouTube Music
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Playlist ID
+ *     responses:
+ *       200:
+ *         description: Playlist data
+ *       400:
+ *         description: Playlist ID is required
+ *       500:
+ *         description: Failed to fetch playlist data
+ */
 router.get('/playlist/:id', async (req, res) => {
   const playlistId = req.params.id;
 
@@ -1347,7 +1401,30 @@ router.get('/playlist/:id', async (req, res) => {
   }
 });
 
-// GET /api/feed/channels=UCxxx,UCyyy[?preview=1]
+/**
+ * @swagger
+ * /api/feed/channels={channels}:
+ *   get:
+ *     summary: Get feed for specific channels (path parameter)
+ *     parameters:
+ *       - in: path
+ *         name: channels
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Comma-separated list of channel IDs
+ *       - in: query
+ *         name: preview
+ *         schema:
+ *           type: integer
+ *           enum: [0, 1]
+ *         description: If 1, returns a limited preview
+ *     responses:
+ *       200:
+ *         description: Feed items
+ *       400:
+ *         description: No valid channel IDs provided
+ */
 router.get('/feed/channels=:channels', (req, res) => {
   // ... existing code ...
   console.log(`[ROUTE] /feed/channels=:channels route hit!`);
@@ -1432,7 +1509,6 @@ router.get('/feed/channels=:channels', (req, res) => {
  * /api/trending:
  *   get:
  *     summary: Get trending songs, videos, and playlists
- *     tags: [Trending]
  *     responses:
  *       200:
  *         description: Trending content
@@ -1452,32 +1528,8 @@ router.get('/feed/channels=:channels', (req, res) => {
  *                       type: array
  *                     playlists:
  *                       type: array
- */
-/**
- * @swagger
- * /api/trending:
- *   get:
- *     summary: Get trending songs, videos, and playlists
- *     tags: [Trending]
- *     responses:
- *       200:
- *         description: Trending content
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 data:
- *                   type: object
- *                   properties:
- *                     songs:
- *                       type: array
- *                     videos:
- *                       type: array
- *                     playlists:
- *                       type: array
+ *       500:
+ *         description: Failed to fetch trending content
  */
 router.get('/trending', async (req, res) => {
   try {
@@ -1500,7 +1552,6 @@ router.get('/trending', async (req, res) => {
  * /api/related/{id}:
  *   get:
  *     summary: Get related videos for a given video ID
- *     tags: [Related]
  *     parameters:
  *       - in: path
  *         name: id
