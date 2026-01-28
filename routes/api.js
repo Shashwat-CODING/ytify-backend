@@ -538,21 +538,11 @@ router.get('/music/find', async (req, res) => {
  *         description: Video ID
  *     responses:
  *       200:
- *         description: Streaming data from Invidious
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 data:
- *                   type: object
- *                   properties:
- *                     invidious:
- *                       type: array
+ *         description: Raw Invidious API response
  *       400:
  *         description: Missing video ID
+ *       404:
+ *         description: No streaming data found
  */
 router.get('/stream/:id', async (req, res) => {
   const { id } = req.params;
@@ -570,35 +560,23 @@ router.get('/stream/:id', async (req, res) => {
 
     const invidiousResult = await fetchFromInvidious(id);
 
-    if (invidiousResult.success) {
-      console.log('[STREAM] Invidious success, returning.');
-      return res.json({
-        success: true,
-        service: invidiousResult.service,
-        instance: invidiousResult.instance,
-        streamingUrls: invidiousResult.streamingUrls,
-        metadata: invidiousResult.metadata,
-        requestedId: id,
-        timestamp: new Date().toISOString()
-      });
+    if (invidiousResult) {
+      console.log('[STREAM] Invidious success, returning raw data.');
+      return res.json(invidiousResult);
     }
 
     // Failed
     console.log('[STREAM] Invidious failed.');
     res.status(404).json({
       success: false,
-      error: 'No streaming data found from Invidious',
-      requestedId: id,
-      timestamp: new Date().toISOString()
+      error: 'No streaming data found from Invidious'
     });
   } catch (error) {
     console.error('Stream endpoint error:', error);
     res.status(500).json({
       success: false,
       error: 'Internal server error',
-      message: error.message,
-      requestedId: id,
-      timestamp: new Date().toISOString()
+      message: error.message
     });
   }
 });
